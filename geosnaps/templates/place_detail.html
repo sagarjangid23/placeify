@@ -41,7 +41,7 @@
                                 <span class="text-gray-600 font-semibold text-lg">{{ forloop.counter }}</span>
                             </div>
                             <div>
-                                <p class="text-gray-700 font-semibold">{{ winner.user.username|capfirst }}  {% if comment.user == user %}(You){% endif %}</p>
+                                <p class="text-gray-700 font-semibold">{{ winner.user.username|capfirst }}  {% if winner.user == user %}(You){% endif %}</p>
                             </div>
                         </li>
                     {% empty %}
@@ -52,21 +52,24 @@
         {% else %}
             <!-- Comment Form -->
             <div class="mt-6">
-                {% if not has_commented %}
-                    <h2 class="text-lg font-semibold mb-4 bg-gray-400 px-4 py-2 rounded-md">Leave a Comment</h2>
-                    <divs class="mb-4 p-1">
-                        <div class="mb-4">
-                            <label for="{{ form.text.id_for_label }}" class="block text-gray-700 font-semibold mb-2">Your Comment</label>
-                            {{ form.text }}
-                        </div>
-                        <div>
-                            <button type="submit" class="bg-blue-500 text-white font-semibold py-1 px-3 rounded hover:bg-blue-600">
-                                Add Comment
-                            </button>
-                        </div>
-                    </div>
-                {% else %}
-                    <p class="text-gray-700 bg-gray-300 p-2">You have already commented on this place.</p>
+                {% if place.user != user %}
+                    {% if not has_commented %}
+                        <h2 class="text-lg font-semibold mb-4 bg-gray-400 px-4 py-2 rounded-md">Leave a Comment</h2>
+                        <form method="post" class="mb-4 p-1">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="{{ form.text.id_for_label }}" class="block text-gray-700 font-semibold mb-2">Your Comment</label>
+                                {{ form.text }}
+                            </div>
+                            <div>
+                                <button type="submit" class="bg-blue-500 text-white font-semibold py-1 px-3 rounded hover:bg-blue-600">
+                                    Add Comment
+                                </button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <p class="text-gray-700 bg-gray-300 p-2">You have already commented on this place.</p>
+                    {% endif %}
                 {% endif %}
             </div>
 
