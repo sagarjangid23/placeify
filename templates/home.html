@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>{% block title %}Placeify - Homepage{% endblock %}</title>
+</head>
+<body>
+    <header class="flex items-center justify-between px-6 py-8 bg-gray-900 font-mono">
+        <span class="text-3xl font-bold text-yellow-300"><a href="{% url "home" %}">Placeify</a></span>
+        <span class="space-x-3">
+            {% if user.is_authenticated %}
+                <a href="{% url "home" %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 my-4 rounded">Home</a>
+                <a href="{% url "profile" %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 my-4 rounded">Profile</a>
+                <a href="{% url "upload" %}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-3 my-4 rounded">Upload photo</a>
+                <a href="{% url "logout" %}" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-3 my-4 rounded my-">Logout</a>
+            {% else %}
+                <a href="{% url "login" %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 my-4 rounded">Login</a>
+                <a href="{% url "signup" %}" class="bg-green-500 hover:bg-green-600 text-white font-semibold py-1 px-3 my-4 rounded">Signup</a>
+            {% endif %}
+        </span>
+    </header>
+    <span class="text-green-500 text-center py-2">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </span>
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,31 @@
+{% extends 'home.html' %}
+
+{% block title %}Upload a photo{% endblock %}
+
+{% block content %}
+<div class="min-h-full my-6 w-full max-w-sm mx-auto overflow-hidden rounded-lg shadow-md bg-gray-800">
+    <div class="">
+        <h1 class="mb-4 bg-gray-700 py-0.5 text-center text-lg font-semibold text-gray-200">Create place</h1>        
+        <form class="px-6" method="POST" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class='text-red-500 my-3'>{{error}}</p>
+                {% endfor %}
+            {% endif %}
+
+            {% for item in form %}
+                <div class="w-full mb-2">
+                    <div class="sr-only">{{item.label_tag}}</div>
+                    <div class="">{{item}}</div>
+                    <div class=""><small class="text-red-400">{{item.errors|striptags}}</small></div>
+                </div>
+            {% endfor %}
+
+            <button class="my-2 w-full px-4 py-2 leading-5 text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none" type="submit">
+                Upload
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

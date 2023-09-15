@@ -1,0 +1,35 @@
+{% extends 'home.html' %}
+
+{% block title %}Places{% endblock %}
+
+{% block content %}
+<div class="">
+    <div class="">
+        <h1 class="mb-4 bg-gray-700 py-0.5 px-6 text-lg font-semibold text-gray-200 font-mono">Place list</h1>
+        <div class="px-4">
+            {% for place in places %}
+                <div class="flex items-start justify-between text-white font-mono font-semibold bg-gray-700 p-6 mb-4 rounded">
+                    <div class="flex">
+                        <img class="bg-pink-900 mr-10 w-24 md:w-36 lg:w-48" src="{{ place.photo.url }}" alt="">
+                        <div class="space-y-2">
+                            <div>
+                                Uploaded By: {{place.user|capfirst}}
+                            </div>
+                            <hr>
+                            <div>
+                                Start-time: {{place.created_at}}
+                            </div>
+                            <hr>
+                            <div>
+                                End-time: {{place.end_time}}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <a href="{% url 'place_detail' place.id %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1.5 px-4 rounded ml-6">View</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
